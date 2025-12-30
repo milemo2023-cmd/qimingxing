@@ -2,7 +2,7 @@ name: Deploy VitePress site to Pages
 
 on:
   push:
-    branches: [master]
+    branches: [master] # 确保你的分支名是 master
 
 permissions:
   contents: read
@@ -15,16 +15,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - name: Install dependencies
         run: npm install
+
+      - name: Set Execution Permission # 核心：解决 Permission denied 的关键步骤
+        run: chmod +x ./node_modules/.bin/vitepress
+
       - name: Build with VitePress
-        # 使用 npx 强制执行，避免权限问题
-        run: npx vitepress build docs
+        run: ./node_modules/.bin/vitepress build docs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
