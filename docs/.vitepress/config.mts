@@ -5,22 +5,23 @@ export default defineConfig({
   title: "启明星 AI",
   description: "AI 时代的指引之星",
   
-  // 这里的 base 如果你是绑定顶级域名 qimingxing.vip，通常保持 '/'
-  // 如果是 github 二级域名且有仓库名，才需要改。现在先保持 '/'
+  // 关键：由于你绑定了顶级域名 qimingxing.vip，base 必须为 '/'
   base: '/',
+
+  // 核心修复：开启 cleanUrls 确保不带 .html 也能正确加载 CSS 样式
+  cleanUrls: true,
 
   themeConfig: {
     // 1. 顶部导航栏
     nav: [
       { text: '首页', link: '/' },
-      { text: '🛠️ AI 工具库', link: '/tools/chat' }, // 方案 A：直接跳到对话页
+      { text: '🛠️ AI 工具库', link: '/tools/chat' },
       { text: '⌨️ Prompt 精选', link: '/prompts/basic' },
       { text: '💰 变现案例', link: '/cases/media' }
     ],
 
     // 2. 左侧侧边栏
     sidebar: {
-      // 当你在 /tools/ 目录下时显示的侧边栏
       '/tools/': [
         {
           text: 'AI 工具推荐',
@@ -30,7 +31,6 @@ export default defineConfig({
           ]
         }
       ],
-      // 当你在 /prompts/ 目录下时显示的侧边栏
       '/prompts/': [
         {
           text: '提示词技巧',
@@ -40,7 +40,6 @@ export default defineConfig({
           ]
         }
       ],
-      // 当你在 /cases/ 目录下时显示的侧边栏
       '/cases/': [
         {
           text: '变现案例拆解',
