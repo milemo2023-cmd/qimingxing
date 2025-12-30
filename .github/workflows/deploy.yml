@@ -23,7 +23,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build with VitePress
-        run: npm run docs:build
+        # 使用 npx 强制执行，避免权限问题
+        run: npx vitepress build docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
