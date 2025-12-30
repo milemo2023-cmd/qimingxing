@@ -2,7 +2,7 @@ name: Deploy VitePress site to Pages
 
 on:
   push:
-    branches: [master] # 确保这里与您的分支名一致（您之前截图显示是 master）
+    branches: [master]
 
 permissions:
   contents: read
@@ -25,17 +25,15 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        # 根据 package-lock.json 安装完整的运行环境
         run: npm install
 
       - name: Build with VitePress
-        # 调用 package.json 中的 docs:build 脚本，避开权限拒绝问题
-        run: npm run docs:build
+        # 强制使用 npx 并在当前环境下运行，解决 Permission denied 问题
+        run: npx vitepress build docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 指向 VitePress 编译生成的静态 HTML 目录
           path: docs/.vitepress/dist
 
   deploy:
