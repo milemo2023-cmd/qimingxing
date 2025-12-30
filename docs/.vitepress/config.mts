@@ -7,7 +7,7 @@ export default defineConfig({
   
   // 这里的 base 如果你是绑定顶级域名 qimingxing.vip，通常保持 '/'
   // 如果是 github 二级域名且有仓库名，才需要改。现在先保持 '/'
-  base: '/qimingxing/',
+  base: '/',
 
   themeConfig: {
     // 1. 顶部导航栏
