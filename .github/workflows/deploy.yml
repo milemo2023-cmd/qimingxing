@@ -2,7 +2,7 @@ name: Deploy VitePress site to Pages
 
 on:
   push:
-    branches: [master] # 如果你的分支名是 main，请改为 main
+    branches: [master] # 确保这里与您的分支名一致（您之前截图显示是 master）
 
 permissions:
   contents: read
@@ -25,16 +25,17 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        # 根据 package-lock.json 安装完整的运行环境
         run: npm install
 
       - name: Build with VitePress
-        # 这一步最关键：它会将你的 docs 文件夹编译成真正的网页
-        run: npx vitepress build docs
+        # 调用 package.json 中的 docs:build 脚本，避开权限拒绝问题
+        run: npm run docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 必须指向编译后的目录
+          # 指向 VitePress 编译生成的静态 HTML 目录
           path: docs/.vitepress/dist
 
   deploy:
